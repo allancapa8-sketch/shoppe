@@ -40,7 +40,15 @@
             <li class="nav-item"><a class="nav-link" href="../admin/placed_orders.php">Orders</a></li>
             <li class="nav-item"><a class="nav-link" href="../admin/admin_accounts.php">Admins</a></li>
             <li class="nav-item"><a class="nav-link" href="../admin/users_accounts.php">Users</a></li>
+            <li class="nav-item"><a class="nav-link" href="../admin/manage_sellers.php">Sellers</a></li>
             <li class="nav-item"><a class="nav-link" href="../admin/messages.php">Messages</a></li>
+            <li class="nav-item dropdown">
+               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reports</a>
+               <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="../admin/transactions.php"><i class="fas fa-exchange-alt me-2"></i>Transactions</a></li>
+                  <li><a class="dropdown-item" href="../admin/sales_reports.php"><i class="fas fa-chart-bar me-2"></i>Sales Reports</a></li>
+               </ul>
+            </li>
          </ul>
 
          <div class="d-flex align-items-center">

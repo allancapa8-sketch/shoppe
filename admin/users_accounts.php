@@ -25,6 +25,20 @@ if(isset($_GET['delete'])){
    header('location:users_accounts.php');
 }
 
+if(isset($_GET['disable'])){
+   $disable_id = $_GET['disable'];
+   $disable_user = $conn->prepare("UPDATE `users` SET status = 'disabled' WHERE id = ?");
+   $disable_user->execute([$disable_id]);
+   $message[] = 'user account disabled successfully!';
+}
+
+if(isset($_GET['enable'])){
+   $enable_id = $_GET['enable'];
+   $enable_user = $conn->prepare("UPDATE `users` SET status = 'active' WHERE id = ?");
+   $enable_user->execute([$enable_id]);
+   $message[] = 'user account enabled successfully!';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -55,17 +69,29 @@ if(isset($_GET['delete'])){
          $select_accounts = $conn->prepare("SELECT * FROM `users`");
          $select_accounts->execute();
          if($select_accounts->rowCount() > 0){
-            while($fetch_accounts = $select_accounts->fetch(PDO::FETCH_ASSOC)){   
+            while($fetch_accounts = $select_accounts->fetch(PDO::FETCH_ASSOC)){
+               $user_status = isset($fetch_accounts['status']) ? $fetch_accounts['status'] : 'active';
+               $status_class = ($user_status == 'active') ? 'success' : 'danger';
       ?>
          <div class="col" data-aos="fade-up">
             <div class="card admin-account-card shadow-sm border-0 text-center h-100">
                <div class="card-body">
+                  <div class="mb-2">
+                     <span class="badge bg-<?= $status_class; ?>"><?= ucfirst($user_status); ?></span>
+                  </div>
                   <p>User ID: <span><?= $fetch_accounts['id']; ?></span></p>
                   <p>Username: <span><?= $fetch_accounts['name']; ?></span></p>
                   <p>Email: <span><?= $fetch_accounts['email']; ?></span></p>
                </div>
                <div class="card-footer bg-transparent border-0 pt-0">
-                  <a href="users_accounts.php?delete=<?= $fetch_accounts['id']; ?>" class="btn btn-danger btn-sm w-100 swal-confirm-delete" data-swal-msg="Delete this account? All related information will also be deleted!">Delete</a>
+                  <div class="d-flex gap-2">
+                     <?php if($user_status == 'active'): ?>
+                        <a href="users_accounts.php?disable=<?= $fetch_accounts['id']; ?>" class="btn btn-warning btn-sm flex-fill" title="Disable this account"><i class="fas fa-ban me-1"></i> Disable</a>
+                     <?php else: ?>
+                        <a href="users_accounts.php?enable=<?= $fetch_accounts['id']; ?>" class="btn btn-success btn-sm flex-fill" title="Enable this account"><i class="fas fa-check me-1"></i> Enable</a>
+                     <?php endif; ?>
+                     <a href="users_accounts.php?delete=<?= $fetch_accounts['id']; ?>" class="btn btn-danger btn-sm flex-fill swal-confirm-delete" data-swal-msg="Delete this account? All related information will also be deleted!"><i class="fas fa-trash me-1"></i> Delete</a>
+                  </div>
                </div>
             </div>
          </div>

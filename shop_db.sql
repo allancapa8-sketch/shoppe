@@ -228,6 +228,47 @@ ALTER TABLE `wishlist`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sellers`
+--
+
+CREATE TABLE `sellers` (
+  `id` int(100) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'pending',
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for table `sellers`
+--
+ALTER TABLE `sellers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for table `sellers`
+--
+ALTER TABLE `sellers`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+
+-- --------------------------------------------------------
+
+--
+-- Add status column to users table
+--
+ALTER TABLE `users` ADD COLUMN `status` varchar(20) NOT NULL DEFAULT 'active' AFTER `password`;
+
+--
+-- Add seller_id column to products table
+--
+ALTER TABLE `products` ADD COLUMN `seller_id` int(100) DEFAULT NULL AFTER `id`;
+
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
