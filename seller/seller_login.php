@@ -13,8 +13,8 @@ if(isset($_POST['submit'])){
    $pass = sha1($_POST['pass']);
    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
 
-   $select_seller = $conn->prepare("SELECT * FROM `sellers` WHERE email = ?");
-   $select_seller->execute([$email]);
+   $select_seller = $conn->prepare("SELECT * FROM `sellers` WHERE email = ? AND password = ?");
+   $select_seller->execute([$email, $pass]);
    $row = $select_seller->fetch(PDO::FETCH_ASSOC);
 
    if($select_seller->rowCount() > 0){
@@ -23,8 +23,6 @@ if(isset($_POST['submit'])){
          $message[] = 'your account is still pending approval!';
       }elseif($status == 'rejected'){
          $message[] = 'your application was rejected by admin!';
-      }elseif($row['password'] !== $pass){
-         $message[] = 'incorrect email or password!';
       }else{
          $_SESSION['seller_id'] = $row['id'];
          header('location:dashboard.php');

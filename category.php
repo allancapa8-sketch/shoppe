@@ -40,8 +40,8 @@ include 'components/wishlist_cart.php';
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       <?php
          $category = $_GET['category'];
-         $select_products = $conn->prepare("SELECT * FROM `products` WHERE name LIKE '%{$category}%'"); 
-         $select_products->execute();
+         $select_products = $conn->prepare("SELECT * FROM `products` WHERE name LIKE ?"); 
+         $select_products->execute(['%'.$category.'%']);
          if($select_products->rowCount() > 0){
             while($fetch_product = $select_products->fetch(PDO::FETCH_ASSOC)){
       ?>
