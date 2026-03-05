@@ -92,81 +92,92 @@ if(isset($_POST['update'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>update product</title>
-
+   <title>Update Product - Admin Panel</title>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
    <link rel="stylesheet" href="../css/admin_style.css">
-
 </head>
 <body>
 
 <?php include '../components/admin_header.php'; ?>
 
-<section class="update-product">
+<section class="section-padding">
+   <div class="container">
+      <h1 class="heading">Update Product</h1>
 
-   <h1 class="heading">update product</h1>
+      <?php
+         $update_id = $_GET['update'];
+         $select_products = $conn->prepare("SELECT * FROM `products` WHERE id = ?");
+         $select_products->execute([$update_id]);
+         if($select_products->rowCount() > 0){
+            while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){ 
+      ?>
+      <div class="row justify-content-center" data-aos="fade-up">
+         <div class="col-lg-8">
+            <form action="" method="post" enctype="multipart/form-data" class="card shadow-sm border-0 p-4">
+               <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
+               <input type="hidden" name="old_image_01" value="<?= $fetch_products['image_01']; ?>">
+               <input type="hidden" name="old_image_02" value="<?= $fetch_products['image_02']; ?>">
+               <input type="hidden" name="old_image_03" value="<?= $fetch_products['image_03']; ?>">
 
-   <?php
-      $update_id = $_GET['update'];
-      $select_products = $conn->prepare("SELECT * FROM `products` WHERE id = ?");
-      $select_products->execute([$update_id]);
-      if($select_products->rowCount() > 0){
-         while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){ 
-   ?>
-   <form action="" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
-      <input type="hidden" name="old_image_01" value="<?= $fetch_products['image_01']; ?>">
-      <input type="hidden" name="old_image_02" value="<?= $fetch_products['image_02']; ?>">
-      <input type="hidden" name="old_image_03" value="<?= $fetch_products['image_03']; ?>">
-      <div class="image-container">
-         <div class="main-image">
-            <img src="../uploaded_img/<?= $fetch_products['image_01']; ?>" alt="">
-         </div>
-         <div class="sub-image">
-            <img src="../uploaded_img/<?= $fetch_products['image_01']; ?>" alt="">
-            <img src="../uploaded_img/<?= $fetch_products['image_02']; ?>" alt="">
-            <img src="../uploaded_img/<?= $fetch_products['image_03']; ?>" alt="">
+               <!-- Current Images -->
+               <div class="text-center mb-4">
+                  <img src="../uploaded_img/<?= $fetch_products['image_01']; ?>" alt="Product Image" class="img-fluid rounded mb-3" style="max-height:250px;">
+                  <div class="d-flex justify-content-center gap-2">
+                     <img src="../uploaded_img/<?= $fetch_products['image_01']; ?>" alt="" class="rounded" style="width:80px; height:80px; object-fit:cover;">
+                     <img src="../uploaded_img/<?= $fetch_products['image_02']; ?>" alt="" class="rounded" style="width:80px; height:80px; object-fit:cover;">
+                     <img src="../uploaded_img/<?= $fetch_products['image_03']; ?>" alt="" class="rounded" style="width:80px; height:80px; object-fit:cover;">
+                  </div>
+               </div>
+
+               <div class="mb-3">
+                  <label class="form-label">Product Name</label>
+                  <input type="text" name="name" required class="form-control" maxlength="100" placeholder="Enter product name" value="<?= $fetch_products['name']; ?>">
+               </div>
+               <div class="mb-3">
+                  <label class="form-label">Product Price ($)</label>
+                  <input type="number" name="price" required class="form-control" min="0" max="9999999999" placeholder="Enter product price" onkeypress="if(this.value.length == 10) return false;" value="<?= $fetch_products['price']; ?>">
+               </div>
+               <div class="mb-3">
+                  <label class="form-label">Product Details</label>
+                  <textarea name="details" class="form-control" required cols="30" rows="6"><?= $fetch_products['details']; ?></textarea>
+               </div>
+               <div class="mb-3">
+                  <label class="form-label">Update Image 01</label>
+                  <input type="file" name="image_01" accept="image/jpg, image/jpeg, image/png, image/webp" class="form-control">
+               </div>
+               <div class="mb-3">
+                  <label class="form-label">Update Image 02</label>
+                  <input type="file" name="image_02" accept="image/jpg, image/jpeg, image/png, image/webp" class="form-control">
+               </div>
+               <div class="mb-3">
+                  <label class="form-label">Update Image 03</label>
+                  <input type="file" name="image_03" accept="image/jpg, image/jpeg, image/png, image/webp" class="form-control">
+               </div>
+               <div class="d-flex gap-2">
+                  <button type="submit" name="update" class="btn btn-primary flex-fill"><i class="fas fa-sync-alt me-1"></i> Update</button>
+                  <a href="products.php" class="btn btn-outline-secondary flex-fill"><i class="fas fa-arrow-left me-1"></i> Go Back</a>
+               </div>
+            </form>
          </div>
       </div>
-      <span>update name</span>
-      <input type="text" name="name" required class="box" maxlength="100" placeholder="enter product name" value="<?= $fetch_products['name']; ?>">
-      <span>update price</span>
-      <input type="number" name="price" required class="box" min="0" max="9999999999" placeholder="enter product price" onkeypress="if(this.value.length == 10) return false;" value="<?= $fetch_products['price']; ?>">
-      <span>update details</span>
-      <textarea name="details" class="box" required cols="30" rows="10"><?= $fetch_products['details']; ?></textarea>
-      <span>update image 01</span>
-      <input type="file" name="image_01" accept="image/jpg, image/jpeg, image/png, image/webp" class="box">
-      <span>update image 02</span>
-      <input type="file" name="image_02" accept="image/jpg, image/jpeg, image/png, image/webp" class="box">
-      <span>update image 03</span>
-      <input type="file" name="image_03" accept="image/jpg, image/jpeg, image/png, image/webp" class="box">
-      <div class="flex-btn">
-         <input type="submit" name="update" class="btn" value="update">
-         <a href="products.php" class="option-btn">go back</a>
-      </div>
-   </form>
-   
-   <?php
+      <?php
+            }
+         }else{
+            echo '<div class="alert alert-warning text-center">No product found!</div>';
          }
-      }else{
-         echo '<p class="empty">no product found!</p>';
-      }
-   ?>
-
+      ?>
+   </div>
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../js/admin_script.js"></script>
    
 </body>
