@@ -81,7 +81,6 @@ if(isset($_GET['delete'])){
    header('location:products.php');
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -90,94 +89,98 @@ if(isset($_GET['delete'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>products</title>
-
+   <title>Products - Admin Panel</title>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
    <link rel="stylesheet" href="../css/admin_style.css">
-
 </head>
 <body>
 
 <?php include '../components/admin_header.php'; ?>
 
-<section class="add-products">
-
-   <h1 class="heading">add product</h1>
-
-   <form action="" method="post" enctype="multipart/form-data">
-      <div class="flex">
-         <div class="inputBox">
-            <span>product name (required)</span>
-            <input type="text" class="box" required maxlength="100" placeholder="enter product name" name="name">
-         </div>
-         <div class="inputBox">
-            <span>product price (required)</span>
-            <input type="number" min="0" class="box" required max="9999999999" placeholder="enter product price" onkeypress="if(this.value.length == 10) return false;" name="price">
-         </div>
-        <div class="inputBox">
-            <span>image 01 (required)</span>
-            <input type="file" name="image_01" accept="image/jpg, image/jpeg, image/png, image/webp" class="box" required>
-        </div>
-        <div class="inputBox">
-            <span>image 02 (required)</span>
-            <input type="file" name="image_02" accept="image/jpg, image/jpeg, image/png, image/webp" class="box" required>
-        </div>
-        <div class="inputBox">
-            <span>image 03 (required)</span>
-            <input type="file" name="image_03" accept="image/jpg, image/jpeg, image/png, image/webp" class="box" required>
-        </div>
-         <div class="inputBox">
-            <span>product details (required)</span>
-            <textarea name="details" placeholder="enter product details" class="box" required maxlength="500" cols="30" rows="10"></textarea>
-         </div>
-      </div>
-      
-      <input type="submit" value="add product" class="btn" name="add_product">
-   </form>
-
-</section>
-
-<section class="show-products">
-
-   <h1 class="heading">products added</h1>
-
-   <div class="box-container">
-
-   <?php
-      $select_products = $conn->prepare("SELECT * FROM `products`");
-      $select_products->execute();
-      if($select_products->rowCount() > 0){
-         while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){ 
-   ?>
-   <div class="box">
-      <img src="../uploaded_img/<?= $fetch_products['image_01']; ?>" alt="">
-      <div class="name"><?= $fetch_products['name']; ?></div>
-      <div class="price">$<span><?= $fetch_products['price']; ?></span>/-</div>
-      <div class="details"><span><?= $fetch_products['details']; ?></span></div>
-      <div class="flex-btn">
-         <a href="update_product.php?update=<?= $fetch_products['id']; ?>" class="option-btn">update</a>
-         <a href="products.php?delete=<?= $fetch_products['id']; ?>" class="delete-btn" onclick="return confirm('delete this product?');">delete</a>
+<!-- Add Product Form -->
+<section class="section-padding">
+   <div class="container">
+      <h1 class="heading">Add Product</h1>
+      <div class="card add-product-form shadow-sm border-0 mx-auto p-4" data-aos="fade-up">
+         <form action="" method="post" enctype="multipart/form-data">
+            <div class="row g-3">
+               <div class="col-md-6">
+                  <label class="form-label text-muted">Product Name (required)</label>
+                  <input type="text" class="form-control" required maxlength="100" placeholder="Enter product name" name="name">
+               </div>
+               <div class="col-md-6">
+                  <label class="form-label text-muted">Product Price (required)</label>
+                  <input type="number" min="0" class="form-control" required max="9999999999" placeholder="Enter product price" onkeypress="if(this.value.length == 10) return false;" name="price">
+               </div>
+               <div class="col-md-4">
+                  <label class="form-label text-muted">Image 01 (required)</label>
+                  <input type="file" name="image_01" accept="image/jpg, image/jpeg, image/png, image/webp" class="form-control" required>
+               </div>
+               <div class="col-md-4">
+                  <label class="form-label text-muted">Image 02 (required)</label>
+                  <input type="file" name="image_02" accept="image/jpg, image/jpeg, image/png, image/webp" class="form-control" required>
+               </div>
+               <div class="col-md-4">
+                  <label class="form-label text-muted">Image 03 (required)</label>
+                  <input type="file" name="image_03" accept="image/jpg, image/jpeg, image/png, image/webp" class="form-control" required>
+               </div>
+               <div class="col-12">
+                  <label class="form-label text-muted">Product Details (required)</label>
+                  <textarea name="details" placeholder="Enter product details" class="form-control" required maxlength="500" rows="3" style="resize:none;"></textarea>
+               </div>
+               <div class="col-12">
+                  <input type="submit" value="Add Product" class="btn btn-primary w-100" name="add_product">
+               </div>
+            </div>
+         </form>
       </div>
    </div>
-   <?php
+</section>
+
+<!-- Products List -->
+<section class="section-padding" style="padding-top:0;">
+   <div class="container">
+      <h1 class="heading">Products Added</h1>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <?php
+         $select_products = $conn->prepare("SELECT * FROM `products`");
+         $select_products->execute();
+         if($select_products->rowCount() > 0){
+            while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){ 
+      ?>
+         <div class="col" data-aos="fade-up">
+            <div class="card admin-product-card shadow-sm border-0 h-100">
+               <img src="../uploaded_img/<?= $fetch_products['image_01']; ?>" class="card-img-top" alt="<?= $fetch_products['name']; ?>">
+               <div class="card-body">
+                  <h6 class="fw-bold"><?= $fetch_products['name']; ?></h6>
+                  <p class="text-primary fw-bold mb-1">$<?= $fetch_products['price']; ?>/-</p>
+                  <p class="text-muted small" style="line-height:1.8;"><?= $fetch_products['details']; ?></p>
+               </div>
+               <div class="card-footer bg-transparent border-0 d-flex gap-2 pt-0">
+                  <a href="update_product.php?update=<?= $fetch_products['id']; ?>" class="btn btn-warning btn-sm flex-fill">Update</a>
+                  <a href="products.php?delete=<?= $fetch_products['id']; ?>" class="btn btn-danger btn-sm flex-fill swal-confirm-delete" data-swal-msg="Delete this product?">Delete</a>
+               </div>
+            </div>
+         </div>
+      <?php
+            }
+         }else{
+            echo '<p class="empty">No products added yet!</p>';
          }
-      }else{
-         echo '<p class="empty">no products added yet!</p>';
-      }
-   ?>
-   
+      ?>
+      </div>
    </div>
-
 </section>
 
-
-
-
-
-
-
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../js/admin_script.js"></script>
    
 </body>

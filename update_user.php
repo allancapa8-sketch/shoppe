@@ -55,48 +55,52 @@ if(isset($_POST['submit'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>register</title>
-   
-   <!-- font awesome cdn link  -->
+   <title>Update Profile - Shopie</title>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
-   <!-- custom css file link  -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
    <link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
    
 <?php include 'components/user_header.php'; ?>
 
-<section class="form-container">
-
-   <form action="" method="post">
-      <h3>update now</h3>
-      <input type="hidden" name="prev_pass" value="<?= $fetch_profile["password"]; ?>">
-      <input type="text" name="name" required placeholder="enter your username" maxlength="20"  class="box" value="<?= $fetch_profile["name"]; ?>">
-      <input type="email" name="email" required placeholder="enter your email" maxlength="50"  class="box" oninput="this.value = this.value.replace(/\s/g, '')" value="<?= $fetch_profile["email"]; ?>">
-      <input type="password" name="old_pass" placeholder="enter your old password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="password" name="new_pass" placeholder="enter your new password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="password" name="cpass" placeholder="confirm your new password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-      <input type="submit" value="update now" class="btn" name="submit">
-   </form>
-
+<section class="auth-section">
+   <div class="card auth-card shadow-sm border-0" data-aos="fade-up">
+      <div class="card-body p-4 text-center">
+         <h3 class="fw-bold text-uppercase mb-4">Update Profile</h3>
+         <form action="" method="post">
+            <input type="hidden" name="prev_pass" value="<?= $fetch_profile["password"]; ?>">
+            <div class="mb-3">
+               <input type="text" name="name" required placeholder="Enter your username" maxlength="20" class="form-control" value="<?= $fetch_profile["name"]; ?>">
+            </div>
+            <div class="mb-3">
+               <input type="email" name="email" required placeholder="Enter your email" maxlength="50" class="form-control" oninput="this.value = this.value.replace(/\s/g, '')" value="<?= $fetch_profile["email"]; ?>">
+            </div>
+            <div class="mb-3">
+               <input type="password" name="old_pass" placeholder="Enter your old password" maxlength="20" class="form-control" oninput="this.value = this.value.replace(/\s/g, '')">
+            </div>
+            <div class="mb-3">
+               <input type="password" name="new_pass" placeholder="Enter your new password" maxlength="20" class="form-control" oninput="this.value = this.value.replace(/\s/g, '')">
+            </div>
+            <div class="mb-3">
+               <input type="password" name="cpass" placeholder="Confirm your new password" maxlength="20" class="form-control" oninput="this.value = this.value.replace(/\s/g, '')">
+            </div>
+            <input type="submit" value="Update Now" class="btn btn-primary w-100" name="submit">
+         </form>
+      </div>
+   </div>
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <?php include 'components/footer.php'; ?>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/script.js"></script>
 
 </body>

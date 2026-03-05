@@ -1,41 +1,42 @@
-<footer class="footer">
+<footer class="site-footer bg-dark text-light pt-5 pb-3 mt-5">
 
-   <section class="grid">
+   <div class="container">
+      <div class="row g-4" data-aos="fade-up">
+         <div class="col-lg-3 col-md-6">
+            <h5>Quick Links</h5>
+            <a href="home.php" class="d-block mb-2"><i class="fas fa-angle-right"></i> Home</a>
+            <a href="about.php" class="d-block mb-2"><i class="fas fa-angle-right"></i> About</a>
+            <a href="shop.php" class="d-block mb-2"><i class="fas fa-angle-right"></i> Shop</a>
+            <a href="contact.php" class="d-block mb-2"><i class="fas fa-angle-right"></i> Contact</a>
+         </div>
 
-      <div class="box">
-         <h3>quick links</h3>
-         <a href="home.php"> <i class="fas fa-angle-right"></i> home</a>
-         <a href="about.php"> <i class="fas fa-angle-right"></i> about</a>
-         <a href="shop.php"> <i class="fas fa-angle-right"></i> shop</a>
-         <a href="contact.php"> <i class="fas fa-angle-right"></i> contact</a>
+         <div class="col-lg-3 col-md-6">
+            <h5>Extra Links</h5>
+            <a href="user_login.php" class="d-block mb-2"><i class="fas fa-angle-right"></i> Login</a>
+            <a href="user_register.php" class="d-block mb-2"><i class="fas fa-angle-right"></i> Register</a>
+            <a href="cart.php" class="d-block mb-2"><i class="fas fa-angle-right"></i> Cart</a>
+            <a href="orders.php" class="d-block mb-2"><i class="fas fa-angle-right"></i> Orders</a>
+         </div>
+
+         <div class="col-lg-3 col-md-6">
+            <h5>Contact Us</h5>
+            <a href="tel:1234567890" class="d-block mb-2"><i class="fas fa-phone"></i> +123 456 7899</a>
+            <a href="tel:11122233333" class="d-block mb-2"><i class="fas fa-phone"></i> +111 222 3333</a>
+            <a href="mailto:shaikh@gmail.com" class="d-block mb-2"><i class="fas fa-envelope"></i> shaikh@gmail.com</a>
+            <a href="https://www.google.com/myplace" class="d-block mb-2"><i class="fas fa-map-marker-alt"></i> Mumbai, India - 400104</a>
+         </div>
+
+         <div class="col-lg-3 col-md-6">
+            <h5>Follow Us</h5>
+            <a href="#" class="d-block mb-2"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="#" class="d-block mb-2"><i class="fab fa-twitter"></i> Twitter</a>
+            <a href="#" class="d-block mb-2"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#" class="d-block mb-2"><i class="fab fa-linkedin"></i> LinkedIn</a>
+         </div>
       </div>
 
-      <div class="box">
-         <h3>extra links</h3>
-         <a href="user_login.php"> <i class="fas fa-angle-right"></i> login</a>
-         <a href="user_register.php"> <i class="fas fa-angle-right"></i> register</a>
-         <a href="cart.php"> <i class="fas fa-angle-right"></i> cart</a>
-         <a href="orders.php"> <i class="fas fa-angle-right"></i> orders</a>
-      </div>
-
-      <div class="box">
-         <h3>contact us</h3>
-         <a href="tel:1234567890"><i class="fas fa-phone"></i> +123 456 7899</a>
-         <a href="tel:11122233333"><i class="fas fa-phone"></i> +111 222 3333</a>
-         <a href="mailto:shaikh@gmail.com"><i class="fas fa-envelope"></i> shaikh@gmail.com</a>
-         <a href="https://www.google.com/myplace"><i class="fas fa-map-marker-alt"></i> mumbai, india - 400104 </a>
-      </div>
-
-      <div class="box">
-         <h3>follow us</h3>
-         <a href="#"><i class="fab fa-facebook-f"></i>facebook</a>
-         <a href="#"><i class="fab fa-twitter"></i>twitter</a>
-         <a href="#"><i class="fab fa-instagram"></i>instagram</a>
-         <a href="#"><i class="fab fa-linkedin"></i>linkedin</a>
-      </div>
-
-   </section>
-
-   <div class="credit">&copy; copyright @ <?= date('Y'); ?> by <span>mr. web designer</span> | all rights reserved!</div>
+      <hr class="border-secondary mt-4 mb-3">
+      <p class="credit text-center mb-0">&copy; Copyright @ <?= date('Y'); ?> by <span>Mr. Web Designer</span> | All rights reserved!</p>
+   </div>
 
 </footer>

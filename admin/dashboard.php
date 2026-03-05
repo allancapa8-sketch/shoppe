@@ -18,131 +18,142 @@ if(!isset($admin_id)){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>dashboard</title>
-
+   <title>Dashboard - Admin Panel</title>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
    <link rel="stylesheet" href="../css/admin_style.css">
-
 </head>
 <body>
 
 <?php include '../components/admin_header.php'; ?>
 
-<section class="dashboard">
+<section class="section-padding">
+   <div class="container">
+      <h1 class="heading">Dashboard</h1>
 
-   <h1 class="heading">dashboard</h1>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
 
-   <div class="box-container">
+         <div class="col" data-aos="fade-up">
+            <div class="card dashboard-card shadow-sm border-0 text-center p-4 h-100">
+               <h3>Welcome!</h3>
+               <p class="text-muted bg-light rounded p-2 my-2"><?= $fetch_profile['name']; ?></p>
+               <a href="update_profile.php" class="btn btn-primary btn-sm">Update Profile</a>
+            </div>
+         </div>
 
-      <div class="box">
-         <h3>welcome!</h3>
-         <p><?= $fetch_profile['name']; ?></p>
-         <a href="update_profile.php" class="btn">update profile</a>
+         <div class="col" data-aos="fade-up" data-aos-delay="50">
+            <div class="card dashboard-card shadow-sm border-0 text-center p-4 h-100">
+               <?php
+                  $total_pendings = 0;
+                  $select_pendings = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = ?");
+                  $select_pendings->execute(['pending']);
+                  if($select_pendings->rowCount() > 0){
+                     while($fetch_pendings = $select_pendings->fetch(PDO::FETCH_ASSOC)){
+                        $total_pendings += $fetch_pendings['total_price'];
+                     }
+                  }
+               ?>
+               <h3>$<?= $total_pendings; ?>/-</h3>
+               <p class="text-muted bg-light rounded p-2 my-2">Total Pendings</p>
+               <a href="placed_orders.php" class="btn btn-primary btn-sm">See Orders</a>
+            </div>
+         </div>
+
+         <div class="col" data-aos="fade-up" data-aos-delay="100">
+            <div class="card dashboard-card shadow-sm border-0 text-center p-4 h-100">
+               <?php
+                  $total_completes = 0;
+                  $select_completes = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = ?");
+                  $select_completes->execute(['completed']);
+                  if($select_completes->rowCount() > 0){
+                     while($fetch_completes = $select_completes->fetch(PDO::FETCH_ASSOC)){
+                        $total_completes += $fetch_completes['total_price'];
+                     }
+                  }
+               ?>
+               <h3>$<?= $total_completes; ?>/-</h3>
+               <p class="text-muted bg-light rounded p-2 my-2">Completed Orders</p>
+               <a href="placed_orders.php" class="btn btn-primary btn-sm">See Orders</a>
+            </div>
+         </div>
+
+         <div class="col" data-aos="fade-up" data-aos-delay="150">
+            <div class="card dashboard-card shadow-sm border-0 text-center p-4 h-100">
+               <?php
+                  $select_orders = $conn->prepare("SELECT * FROM `orders`");
+                  $select_orders->execute();
+                  $number_of_orders = $select_orders->rowCount()
+               ?>
+               <h3><?= $number_of_orders; ?></h3>
+               <p class="text-muted bg-light rounded p-2 my-2">Orders Placed</p>
+               <a href="placed_orders.php" class="btn btn-primary btn-sm">See Orders</a>
+            </div>
+         </div>
+
+         <div class="col" data-aos="fade-up" data-aos-delay="200">
+            <div class="card dashboard-card shadow-sm border-0 text-center p-4 h-100">
+               <?php
+                  $select_products = $conn->prepare("SELECT * FROM `products`");
+                  $select_products->execute();
+                  $number_of_products = $select_products->rowCount()
+               ?>
+               <h3><?= $number_of_products; ?></h3>
+               <p class="text-muted bg-light rounded p-2 my-2">Products Added</p>
+               <a href="products.php" class="btn btn-primary btn-sm">See Products</a>
+            </div>
+         </div>
+
+         <div class="col" data-aos="fade-up" data-aos-delay="250">
+            <div class="card dashboard-card shadow-sm border-0 text-center p-4 h-100">
+               <?php
+                  $select_users = $conn->prepare("SELECT * FROM `users`");
+                  $select_users->execute();
+                  $number_of_users = $select_users->rowCount()
+               ?>
+               <h3><?= $number_of_users; ?></h3>
+               <p class="text-muted bg-light rounded p-2 my-2">Normal Users</p>
+               <a href="users_accounts.php" class="btn btn-primary btn-sm">See Users</a>
+            </div>
+         </div>
+
+         <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card dashboard-card shadow-sm border-0 text-center p-4 h-100">
+               <?php
+                  $select_admins = $conn->prepare("SELECT * FROM `admins`");
+                  $select_admins->execute();
+                  $number_of_admins = $select_admins->rowCount()
+               ?>
+               <h3><?= $number_of_admins; ?></h3>
+               <p class="text-muted bg-light rounded p-2 my-2">Admin Users</p>
+               <a href="admin_accounts.php" class="btn btn-primary btn-sm">See Admins</a>
+            </div>
+         </div>
+
+         <div class="col" data-aos="fade-up" data-aos-delay="350">
+            <div class="card dashboard-card shadow-sm border-0 text-center p-4 h-100">
+               <?php
+                  $select_messages = $conn->prepare("SELECT * FROM `messages`");
+                  $select_messages->execute();
+                  $number_of_messages = $select_messages->rowCount()
+               ?>
+               <h3><?= $number_of_messages; ?></h3>
+               <p class="text-muted bg-light rounded p-2 my-2">New Messages</p>
+               <a href="messages.php" class="btn btn-primary btn-sm">See Messages</a>
+            </div>
+         </div>
+
       </div>
-
-      <div class="box">
-         <?php
-            $total_pendings = 0;
-            $select_pendings = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = ?");
-            $select_pendings->execute(['pending']);
-            if($select_pendings->rowCount() > 0){
-               while($fetch_pendings = $select_pendings->fetch(PDO::FETCH_ASSOC)){
-                  $total_pendings += $fetch_pendings['total_price'];
-               }
-            }
-         ?>
-         <h3><span>$</span><?= $total_pendings; ?><span>/-</span></h3>
-         <p>total pendings</p>
-         <a href="placed_orders.php" class="btn">see orders</a>
-      </div>
-
-      <div class="box">
-         <?php
-            $total_completes = 0;
-            $select_completes = $conn->prepare("SELECT * FROM `orders` WHERE payment_status = ?");
-            $select_completes->execute(['completed']);
-            if($select_completes->rowCount() > 0){
-               while($fetch_completes = $select_completes->fetch(PDO::FETCH_ASSOC)){
-                  $total_completes += $fetch_completes['total_price'];
-               }
-            }
-         ?>
-         <h3><span>$</span><?= $total_completes; ?><span>/-</span></h3>
-         <p>completed orders</p>
-         <a href="placed_orders.php" class="btn">see orders</a>
-      </div>
-
-      <div class="box">
-         <?php
-            $select_orders = $conn->prepare("SELECT * FROM `orders`");
-            $select_orders->execute();
-            $number_of_orders = $select_orders->rowCount()
-         ?>
-         <h3><?= $number_of_orders; ?></h3>
-         <p>orders placed</p>
-         <a href="placed_orders.php" class="btn">see orders</a>
-      </div>
-
-      <div class="box">
-         <?php
-            $select_products = $conn->prepare("SELECT * FROM `products`");
-            $select_products->execute();
-            $number_of_products = $select_products->rowCount()
-         ?>
-         <h3><?= $number_of_products; ?></h3>
-         <p>products added</p>
-         <a href="products.php" class="btn">see products</a>
-      </div>
-
-      <div class="box">
-         <?php
-            $select_users = $conn->prepare("SELECT * FROM `users`");
-            $select_users->execute();
-            $number_of_users = $select_users->rowCount()
-         ?>
-         <h3><?= $number_of_users; ?></h3>
-         <p>normal users</p>
-         <a href="users_accounts.php" class="btn">see users</a>
-      </div>
-
-      <div class="box">
-         <?php
-            $select_admins = $conn->prepare("SELECT * FROM `admins`");
-            $select_admins->execute();
-            $number_of_admins = $select_admins->rowCount()
-         ?>
-         <h3><?= $number_of_admins; ?></h3>
-         <p>admin users</p>
-         <a href="admin_accounts.php" class="btn">see admins</a>
-      </div>
-
-      <div class="box">
-         <?php
-            $select_messages = $conn->prepare("SELECT * FROM `messages`");
-            $select_messages->execute();
-            $number_of_messages = $select_messages->rowCount()
-         ?>
-         <h3><?= $number_of_messages; ?></h3>
-         <p>new messages</p>
-         <a href="messagess.php" class="btn">see messages</a>
-      </div>
-
    </div>
-
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../js/admin_script.js"></script>
    
 </body>
